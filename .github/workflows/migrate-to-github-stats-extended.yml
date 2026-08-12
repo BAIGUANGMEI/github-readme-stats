@@ -1,0 +1,20 @@
+name: Migrate to GitHub Stats Extended
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Replace master with successor commit
+        run: |
+          git remote add successor https://github.com/stats-organization/github-stats-extended.git
+          git fetch successor a9cfee5809ddaecb87cefcc87f66619601981867
+          git push origin +a9cfee5809ddaecb87cefcc87f66619601981867:refs/heads/master
